@@ -31,7 +31,7 @@ namespace HDShop.Goods
         public virtual GoodCategory? ParentCategory { get; set; }
 #pragma warning restore CS8632 // 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。
         public virtual IEnumerable<GoodCategory> ChildCategorys { get; set; }
-        public virtual IEnumerable<Good> Goods { get; set; }
+        //public virtual IEnumerable<GoodCategoryMap> GoodCategoryMaps { get; set; }
         #endregion
     }
 }

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Volo.Abp.Domain.Entities.Auditing;
+using System.Linq;
 using System.Text;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HDShop.Goods
 {
@@ -32,15 +34,18 @@ namespace HDShop.Goods
         [Required]
         [StringLength(GoodConsts.ImageBaseUrlLength)]
         public virtual string ImageBaseUrl { get; set; }
+        
+        [Obsolete]
+        public string ImageUrlsValue { get; set; }
 
+        [NotMapped]
         [Required]
-        public virtual string[] ImageUrls { get; set; }
+        public virtual string[] ImageUrls
+        {
+            get { return ImageUrlsValue.Split(','); }
+            set { ImageUrlsValue = string.Join(',', value); }
+        }
 
-        /// <summary>
-        /// 可用库存
-        /// </summary>
-        [Required]
-        public virtual int Stock { get; set; }
 
         /// <summary>
         /// 排序
@@ -90,17 +95,26 @@ namespace HDShop.Goods
         [Required]
         public virtual int Weight { get; set; }
 
-        /// <summary>
-        /// 销售状态
-        /// </summary>
-        public virtual IEnumerable<SaleState> SaleState { get; set; }
+        [Obsolete]
+        public virtual int SaleStateValue { get; set; }
+
+        public virtual IEnumerable<GoodSku> GoodSkus { get; set; }
+
+        [NotMapped]
+        public virtual IEnumerable<GoodProperty> GoodProperties { get; set; }
 
         #endregion
 
+        #region 方法
+        public int GetStocks()
+        {
+            return GoodSkus.Sum(f => f.Stock);
+        }
+        #endregion
 
         #region 导航属性
 
-        public virtual IEnumerable<GoodCategory> Categories { get; set; }
+        public virtual IEnumerable<GoodCategoryMap> GoodCategoryMaps { get; set; }
         #endregion
     }
 }

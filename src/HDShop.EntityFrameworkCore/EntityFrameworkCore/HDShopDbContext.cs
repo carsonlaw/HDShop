@@ -26,6 +26,7 @@ namespace HDShop.EntityFrameworkCore
          * Also map them inside HDShopDbContextModelCreatingExtensions.ConfigureHDShop
          */
         public DbSet<GoodCategory> GoodCategories { get; set; }
+        public DbSet<Good> Goods { get; set; }
 
         public HDShopDbContext(DbContextOptions<HDShopDbContext> options)
             : base(options)

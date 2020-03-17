@@ -2,9 +2,9 @@
 {
     public enum SaleState
     {
-        IsHot,
-        IsNew,
-        IsDiscount,
-        IsRecommand
+        IsHot = 1,
+        IsNew = 2,
+        IsDiscount = 4,
+        IsRecommand = 8
     }
 }

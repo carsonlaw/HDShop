@@ -42,6 +42,7 @@ namespace HDShop.EntityFrameworkCore
                  * See also HDShopMigrationsDbContextFactory for EF Core tooling. */
                 options.UseSqlServer();
             });
+
         }
     }
 }
