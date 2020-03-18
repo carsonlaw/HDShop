@@ -5,6 +5,7 @@ using Volo.Abp.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.Users.EntityFrameworkCore;
 using HDShop.Goods;
+using HDShop.Orders;
 
 namespace HDShop.EntityFrameworkCore
 {
@@ -27,6 +28,8 @@ namespace HDShop.EntityFrameworkCore
          */
         public DbSet<GoodCategory> GoodCategories { get; set; }
         public DbSet<Good> Goods { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
 
         public HDShopDbContext(DbContextOptions<HDShopDbContext> options)
             : base(options)

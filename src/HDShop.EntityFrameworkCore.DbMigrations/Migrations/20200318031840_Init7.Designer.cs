@@ -4,14 +4,16 @@ using HDShop.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HDShop.Migrations
 {
     [DbContext(typeof(HDShopMigrationsDbContext))]
-    partial class HDShopMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200318031840_Init7")]
+    partial class Init7
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,11 +46,9 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnName("DeleterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnName("DeletionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -68,10 +68,7 @@ namespace HDShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
@@ -143,14 +140,13 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnName("DeleterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnName("DeletionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
 
@@ -159,14 +155,12 @@ namespace HDShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("GoodDescription")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasMaxLength(8000);
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")
@@ -305,11 +299,9 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("DeleterId")
-                        .HasColumnName("DeleterId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime?>("DeletionTime")
-                        .HasColumnName("DeletionTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ExtraProperties")
@@ -317,10 +309,7 @@ namespace HDShop.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("IsDeleted")
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastModificationTime")
                         .HasColumnName("LastModificationTime")

@@ -31,7 +31,7 @@ namespace HDShop.Goods
             {
                 //Act
                 var adminUser = await _Repository
-                    .Where(f => f.Name == "测试分类")
+                    .Where(f => f.Name == "休闲零食")
                     .FirstOrDefaultAsync();
 
                 //Assert

@@ -7,10 +7,9 @@ namespace HDShop.Goods
 {
     public class GoodCategoryMap
     {
-        public GoodCategory Category { get; set; }
-
+        public GoodCategory GoodCategory { get; set; }
         public Good Good { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid GoodCategoryId { get; set; }
         public Guid GoodId { get; set; }
     }
 }

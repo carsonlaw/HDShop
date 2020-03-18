@@ -10,6 +10,22 @@ namespace HDShop.Goods
 {
     public class Good : FullAuditedAggregateRoot<Guid>
     {
+        protected Good() { }
+        public Good(Guid id, string name, string code, string description, string imageBaseUrl, string[] imageUrls, 
+            SaleState saleState, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodPropertyMap> goodPropertieMaps, IEnumerable<GoodCategoryMap> goodCategoryMaps)
+            : base(id)
+        {
+            Name = name;
+            Code = code;
+            Description = description;
+            ImageBaseUrl = imageBaseUrl;
+            ImageUrls = imageUrls;
+            SaleState = saleState;
+            GoodSkus = goodSkus;
+            GoodPropertieMaps = goodPropertieMaps;
+            GoodCategoryMaps = goodCategoryMaps;
+        }
+
         #region 属性
         /// <summary>
         /// 名称
@@ -34,74 +50,20 @@ namespace HDShop.Goods
         [Required]
         [StringLength(GoodConsts.ImageBaseUrlLength)]
         public virtual string ImageBaseUrl { get; set; }
-        
-        [Obsolete]
-        public string ImageUrlsValue { get; set; }
 
-        [NotMapped]
         [Required]
-        public virtual string[] ImageUrls
-        {
-            get { return ImageUrlsValue.Split(','); }
-            set { ImageUrlsValue = string.Join(',', value); }
-        }
+        public virtual string[] ImageUrls { get; set; }
 
+        //[NotMapped]
+        //[Required]
+        //public virtual string[] ImageUrls
+        //{
+        //    get { return ImageUrlsValue.Split(','); }
+        //    set { ImageUrlsValue = string.Join(',', value); }
+        //}
 
-        /// <summary>
-        /// 排序
-        /// </summary>
-        [Required]
-        public virtual int Sort { get; set; }
+        public virtual SaleState SaleState { get; set; }
 
-        /// <summary>
-        /// 上架
-        /// </summary>
-        [Required]
-        public virtual bool OnSale { get; set; }
-
-        /// <summary>
-        /// 成本价
-        /// </summary>
-        [Required]
-        public virtual decimal PriceCost { get; set; }
-
-        /// <summary>
-        /// 产品原价
-        /// </summary>
-        [Required]
-        public virtual decimal PriceProduct { get; set; }
-
-        /// <summary>
-        /// 现价
-        /// </summary>
-        [Required]
-        public virtual decimal PriceSale { get; set; }
-
-        /// <summary>
-        /// 售出数量
-        /// </summary>
-        [Required]
-        public virtual int NumSales { get; set; }
-
-        /// <summary>
-        /// 真实销售数量
-        /// </summary>
-        [Required]
-        public virtual int NumSalesReal { get; set; }
-
-        /// <summary>
-        /// 单个重量
-        /// </summary>
-        [Required]
-        public virtual int Weight { get; set; }
-
-        [Obsolete]
-        public virtual int SaleStateValue { get; set; }
-
-        public virtual IEnumerable<GoodSku> GoodSkus { get; set; }
-
-        [NotMapped]
-        public virtual IEnumerable<GoodProperty> GoodProperties { get; set; }
 
         #endregion
 
@@ -115,6 +77,11 @@ namespace HDShop.Goods
         #region 导航属性
 
         public virtual IEnumerable<GoodCategoryMap> GoodCategoryMaps { get; set; }
+
+        public virtual IEnumerable<GoodSku> GoodSkus { get; set; }
+
+        public virtual IEnumerable<GoodPropertyMap> GoodPropertieMaps { get; set; }
+
         #endregion
     }
 }

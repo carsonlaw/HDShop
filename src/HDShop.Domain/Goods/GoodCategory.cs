@@ -7,6 +7,19 @@ namespace HDShop.Goods
 {
     public class GoodCategory : FullAuditedAggregateRoot<Guid>
     {
+        protected GoodCategory()
+        { }
+        public GoodCategory(Guid id,string name,string code,string description,string goodDescription, GoodCategory? parentCategory, IEnumerable<GoodCategory> childCategorys)
+            :base(id)
+        {
+            Name = name;
+            Code = code;
+            Description = description;
+            GoodDescription = goodDescription;
+            ParentCategory = parentCategory;
+            ChildCategorys = childCategorys;
+        }
+        
         #region 属性
         [Required]
         [StringLength(GoodCategoryConsts.NameLength)]
@@ -16,11 +29,9 @@ namespace HDShop.Goods
         [StringLength(GoodCategoryConsts.CodeLength)]
         public virtual string Code { get; set; }
 
-        [Required]
         [StringLength(GoodCategoryConsts.DescriptionLength)]
         public virtual string Description { get; set; }
 
-        [Required]
         [StringLength(GoodCategoryConsts.GoodDescriptionLength)]
         public virtual string GoodDescription { get; set; }
         #endregion
