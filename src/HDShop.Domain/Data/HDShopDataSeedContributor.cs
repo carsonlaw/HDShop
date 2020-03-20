@@ -47,8 +47,36 @@ namespace HDShop.Data
         private async Task GoodPropertySeedAsync()
         {
             var num = await _repoGoodProperty.GetCountAsync();
-
-            throw new NotImplementedException();
+            if (num == 0)
+            {
+                goodPropertyId = _guidGenerator.Create();
+                var entity = await _repoGoodProperty.InsertAsync(new GoodProperty(
+                        goodPropertyId,
+                        "口味",
+                        "kw",
+                        null,
+                        new List<GoodProperty>() { 
+                            new GoodProperty(
+                                _guidGenerator.Create(),
+                                "麻辣",
+                                "l",
+                                null,
+                                null
+                                ) ,
+                            new GoodProperty(
+                                _guidGenerator.Create(),
+                                "五香",
+                                "w",
+                                null,
+                                null
+                            )
+                        }
+                    ));
+            }
+            else
+            {
+                goodPropertyId = _repoGoodProperty.FirstOrDefault().Id;
+            }
         }
 
         private async Task GoodCategroySeedAsync()
@@ -68,6 +96,10 @@ namespace HDShop.Data
                     );
                 entity = await _repoGoodCategory.InsertAsync(entity);
             }
+            else
+            {
+                goodCategoryId = _repoGoodCategory.FirstOrDefault().Id;
+            }
         }
         private async Task GoodSeedAsync()
         {
@@ -80,8 +112,8 @@ namespace HDShop.Data
                     "ls001",
                     "风干牛肉",
                     "",
-                    new string[] { "1.png","2.png"},
-                    new SaleState(),
+                    new string[] { "1.png", "2.png" },
+                    new SaleStates(),
                     new List<GoodSku>() { new GoodSku(
                         _guidGenerator.Create(),
                         "h",
@@ -91,7 +123,7 @@ namespace HDShop.Data
                         30,
                         25,
                         200,
-                        1000                        
+                        1000
                         ) },
                     new List<GoodPropertyMap>() { new GoodPropertyMap() { Sort = 1, GoodPropertyId = goodPropertyId } },
                     new List<GoodCategoryMap>() { new GoodCategoryMap() { GoodCategoryId = goodCategoryId } }
@@ -99,5 +131,6 @@ namespace HDShop.Data
                 entity = await _repoGood.InsertAsync(entity);
 
             }
+        }
     }
 }

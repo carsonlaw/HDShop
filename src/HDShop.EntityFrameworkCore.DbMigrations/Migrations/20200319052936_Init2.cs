@@ -2,7 +2,7 @@
 
 namespace HDShop.Migrations
 {
-    public partial class HDShopInit : Migration
+    public partial class Init2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

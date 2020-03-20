@@ -27,8 +27,8 @@ namespace HDShop.EntityFrameworkCore
          * Also map them inside HDShopDbContextModelCreatingExtensions.ConfigureHDShop
          */
         public DbSet<GoodCategory> GoodCategories { get; set; }
+        public DbSet<GoodProperty> GoodProperties { get; set; }
         public DbSet<Good> Goods { get; set; }
-
         public DbSet<Order> Orders { get; set; }
 
         public HDShopDbContext(DbContextOptions<HDShopDbContext> options)
@@ -39,8 +39,6 @@ namespace HDShop.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
-
             /* Configure the shared tables (with included modules) here */
 
             builder.Entity<AppUser>(b =>
@@ -56,6 +54,7 @@ namespace HDShop.EntityFrameworkCore
             /* Configure your own tables/entities inside the ConfigureHDShop method */
 
             builder.ConfigureHDShop();
+            base.OnModelCreating(builder);
         }
     }
 }

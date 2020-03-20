@@ -12,7 +12,7 @@ namespace HDShop.Goods
     {
         protected Good() { }
         public Good(Guid id, string name, string code, string description, string imageBaseUrl, string[] imageUrls, 
-            SaleState saleState, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodPropertyMap> goodPropertieMaps, IEnumerable<GoodCategoryMap> goodCategoryMaps)
+            SaleStates saleStates, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodPropertyMap> goodPropertieMaps, IEnumerable<GoodCategoryMap> goodCategoryMaps)
             : base(id)
         {
             Name = name;
@@ -20,7 +20,7 @@ namespace HDShop.Goods
             Description = description;
             ImageBaseUrl = imageBaseUrl;
             ImageUrls = imageUrls;
-            SaleState = saleState;
+            SaleStates = saleStates;
             GoodSkus = goodSkus;
             GoodPropertieMaps = goodPropertieMaps;
             GoodCategoryMaps = goodCategoryMaps;
@@ -61,8 +61,7 @@ namespace HDShop.Goods
         //    get { return ImageUrlsValue.Split(','); }
         //    set { ImageUrlsValue = string.Join(',', value); }
         //}
-
-        public virtual SaleState SaleState { get; set; }
+        public virtual SaleStates SaleStates { get; set; }
 
 
         #endregion

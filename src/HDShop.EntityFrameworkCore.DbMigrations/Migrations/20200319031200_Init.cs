@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HDShop.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -199,6 +199,121 @@ namespace HDShop.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AbpUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDGood",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 250, nullable: false),
+                    Code = table.Column<string>(maxLength: 20, nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    ImageBaseUrl = table.Column<string>(maxLength: 100, nullable: false),
+                    ImageUrls = table.Column<string>(nullable: false),
+                    SaleState_IsHot = table.Column<bool>(nullable: true),
+                    SaleState_IsNew = table.Column<bool>(nullable: true),
+                    SaleState_IsDiscount = table.Column<bool>(nullable: true),
+                    SaleState_IsRecommand = table.Column<bool>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGood", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDGoodCategory",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(maxLength: 20, nullable: false),
+                    Code = table.Column<string>(maxLength: 10, nullable: false),
+                    Description = table.Column<string>(maxLength: 200, nullable: true),
+                    GoodDescription = table.Column<string>(maxLength: 8000, nullable: true),
+                    ParentCategoryId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGoodCategory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HDGoodCategory_HDGoodCategory_ParentCategoryId",
+                        column: x => x.ParentCategoryId,
+                        principalTable: "HDGoodCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDGoodProperty",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
+                    ParentGoodPropertyId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGoodProperty", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HDGoodProperty_HDGoodProperty_ParentGoodPropertyId",
+                        column: x => x.ParentGoodPropertyId,
+                        principalTable: "HDGoodProperty",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDOrder",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    ExtraProperties = table.Column<string>(nullable: true),
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Code = table.Column<string>(maxLength: 20, nullable: false),
+                    UserId = table.Column<string>(maxLength: 20, nullable: false),
+                    UserName = table.Column<string>(maxLength: 20, nullable: false),
+                    PayPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PayTime = table.Column<DateTime>(nullable: false),
+                    OrderStatus = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDOrder", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -531,6 +646,90 @@ namespace HDShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HDGoodSku",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    CreationTime = table.Column<DateTime>(nullable: false),
+                    CreatorId = table.Column<Guid>(nullable: true),
+                    LastModificationTime = table.Column<DateTime>(nullable: true),
+                    LastModifierId = table.Column<Guid>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false, defaultValue: false),
+                    DeleterId = table.Column<Guid>(nullable: true),
+                    DeletionTime = table.Column<DateTime>(nullable: true),
+                    Code = table.Column<string>(maxLength: 20, nullable: false),
+                    Sort = table.Column<int>(nullable: false),
+                    OnSale = table.Column<bool>(nullable: false),
+                    PriceCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceProduct = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceSale = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    NumSales = table.Column<int>(nullable: false),
+                    NumSalesReal = table.Column<int>(nullable: false),
+                    Weight = table.Column<int>(nullable: false),
+                    Stock = table.Column<int>(nullable: false),
+                    GoodId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGoodSku", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HDGoodSku_HDGood_GoodId",
+                        column: x => x.GoodId,
+                        principalTable: "HDGood",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDGoodCategoryMap",
+                columns: table => new
+                {
+                    GoodCategoryId = table.Column<Guid>(nullable: false),
+                    GoodId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGoodCategoryMap", x => new { x.GoodCategoryId, x.GoodId });
+                    table.ForeignKey(
+                        name: "FK_HDGoodCategoryMap_HDGoodCategory_GoodCategoryId",
+                        column: x => x.GoodCategoryId,
+                        principalTable: "HDGoodCategory",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HDGoodCategoryMap_HDGood_GoodId",
+                        column: x => x.GoodId,
+                        principalTable: "HDGood",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "HDGoodPropertyMap",
+                columns: table => new
+                {
+                    GoodPropertyId = table.Column<Guid>(nullable: false),
+                    GoodId = table.Column<Guid>(nullable: false),
+                    Sort = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDGoodPropertyMap", x => new { x.GoodPropertyId, x.GoodId });
+                    table.ForeignKey(
+                        name: "FK_HDGoodPropertyMap_HDGood_GoodId",
+                        column: x => x.GoodId,
+                        principalTable: "HDGood",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_HDGoodPropertyMap_HDGoodProperty_GoodPropertyId",
+                        column: x => x.GoodPropertyId,
+                        principalTable: "HDGoodProperty",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityServerApiClaims",
                 columns: table => new
                 {
@@ -801,6 +1000,34 @@ namespace HDShop.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HDOrderLine",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    GoodSkuId = table.Column<Guid>(nullable: true),
+                    OrderId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HDOrderLine", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_HDOrderLine_HDGoodSku_GoodSkuId",
+                        column: x => x.GoodSkuId,
+                        principalTable: "HDGoodSku",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_HDOrderLine_HDOrder_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "HDOrder",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "IdentityServerApiScopeClaims",
                 columns: table => new
                 {
@@ -925,6 +1152,41 @@ namespace HDShop.Migrations
                 column: "UserName");
 
             migrationBuilder.CreateIndex(
+                name: "IX_HDGoodCategory_ParentCategoryId",
+                table: "HDGoodCategory",
+                column: "ParentCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDGoodCategoryMap_GoodId",
+                table: "HDGoodCategoryMap",
+                column: "GoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDGoodProperty_ParentGoodPropertyId",
+                table: "HDGoodProperty",
+                column: "ParentGoodPropertyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDGoodPropertyMap_GoodId",
+                table: "HDGoodPropertyMap",
+                column: "GoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDGoodSku_GoodId",
+                table: "HDGoodSku",
+                column: "GoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDOrderLine_GoodSkuId",
+                table: "HDOrderLine",
+                column: "GoodSkuId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_HDOrderLine_OrderId",
+                table: "HDOrderLine",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_IdentityServerClients_ClientId",
                 table: "IdentityServerClients",
                 column: "ClientId");
@@ -999,6 +1261,15 @@ namespace HDShop.Migrations
                 name: "AbpUserTokens");
 
             migrationBuilder.DropTable(
+                name: "HDGoodCategoryMap");
+
+            migrationBuilder.DropTable(
+                name: "HDGoodPropertyMap");
+
+            migrationBuilder.DropTable(
+                name: "HDOrderLine");
+
+            migrationBuilder.DropTable(
                 name: "IdentityServerApiClaims");
 
             migrationBuilder.DropTable(
@@ -1056,6 +1327,18 @@ namespace HDShop.Migrations
                 name: "AbpUsers");
 
             migrationBuilder.DropTable(
+                name: "HDGoodCategory");
+
+            migrationBuilder.DropTable(
+                name: "HDGoodProperty");
+
+            migrationBuilder.DropTable(
+                name: "HDGoodSku");
+
+            migrationBuilder.DropTable(
+                name: "HDOrder");
+
+            migrationBuilder.DropTable(
                 name: "IdentityServerApiScopes");
 
             migrationBuilder.DropTable(
@@ -1066,6 +1349,9 @@ namespace HDShop.Migrations
 
             migrationBuilder.DropTable(
                 name: "AbpAuditLogs");
+
+            migrationBuilder.DropTable(
+                name: "HDGood");
 
             migrationBuilder.DropTable(
                 name: "IdentityServerApiResources");

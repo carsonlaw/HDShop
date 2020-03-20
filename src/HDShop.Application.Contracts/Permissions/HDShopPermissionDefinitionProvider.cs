@@ -11,7 +11,10 @@ namespace HDShop.Permissions
             var myGroup = context.AddGroup(HDShopPermissions.GroupName);
 
             //Define your own permissions here. Example:
-            //myGroup.AddPermission(HDShopPermissions.MyPermission1, L("Permission:MyPermission1"));
+            var good = myGroup.AddPermission(HDShopPermissions.GroupName + HDShopPermissions.GoodManager, L("Permission:GoodManager"));
+            good.AddChild(HDShopPermissions.GoodManager + HDShopPermissions.AddName, L("Permission:Add"));
+            good.AddChild(HDShopPermissions.GoodManager + HDShopPermissions.EditName, L("Permission:Edit"));
+            good.AddChild(HDShopPermissions.GoodManager + HDShopPermissions.DeleteName, L("Permission:Delete"));
         }
 
         private static LocalizableString L(string name)

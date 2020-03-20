@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HDShop.Migrations
 {
     [DbContext(typeof(HDShopMigrationsDbContext))]
-    [Migration("20200318073832_Init8")]
-    partial class Init8
+    [Migration("20200319052936_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,7 +66,8 @@ namespace HDShop.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("ImageUrlsValue")
+                    b.Property<string>("ImageUrls")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -87,33 +88,6 @@ namespace HDShop.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
-
-                    b.Property<int>("NumSales")
-                        .HasColumnType("int");
-
-                    b.Property<int>("NumSalesReal")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("OnSale")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("PriceCost")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PriceProduct")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PriceSale")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("SaleStateValue")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Sort")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Weight")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -195,13 +169,13 @@ namespace HDShop.Migrations
 
             modelBuilder.Entity("HDShop.Goods.GoodCategoryMap", b =>
                 {
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("GoodCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("GoodId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CategoryId", "GoodId");
+                    b.HasKey("GoodCategoryId", "GoodId");
 
                     b.HasIndex("GoodId");
 
@@ -217,15 +191,74 @@ namespace HDShop.Migrations
                     b.Property<string>("Code")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnName("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnName("CreatorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnName("DeleterId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnName("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ExtraProperties")
+                        .HasColumnName("ExtraProperties")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("IsDeleted")
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnName("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnName("LastModifierId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TypeName")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ParentGoodPropertyId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ParentGoodPropertyId");
+
                     b.ToTable("HDGoodProperty");
+                });
+
+            modelBuilder.Entity("HDShop.Goods.GoodPropertyMap", b =>
+                {
+                    b.Property<Guid>("GoodPropertyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("GoodId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
+                    b.HasKey("GoodPropertyId", "GoodId");
+
+                    b.HasIndex("GoodId");
+
+                    b.ToTable("HDGoodPropertyMap");
                 });
 
             modelBuilder.Entity("HDShop.Goods.GoodSku", b =>
@@ -272,7 +305,31 @@ namespace HDShop.Migrations
                         .HasColumnName("LastModifierId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("NumSales")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NumSalesReal")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("OnSale")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("PriceCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceProduct")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PriceSale")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("int");
+
                     b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1908,6 +1965,34 @@ namespace HDShop.Migrations
                     b.ToTable("AbpTenantConnectionStrings");
                 });
 
+            modelBuilder.Entity("HDShop.Goods.Good", b =>
+                {
+                    b.OwnsOne("HDShop.Goods.SaleStates", "SaleStates", b1 =>
+                        {
+                            b1.Property<Guid>("GoodId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("IsDiscount")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool>("IsHot")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool>("IsNew")
+                                .HasColumnType("bit");
+
+                            b1.Property<bool>("IsRecommand")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("GoodId");
+
+                            b1.ToTable("HDGood");
+
+                            b1.WithOwner("Good")
+                                .HasForeignKey("GoodId");
+                        });
+                });
+
             modelBuilder.Entity("HDShop.Goods.GoodCategory", b =>
                 {
                     b.HasOne("HDShop.Goods.GoodCategory", "ParentCategory")
@@ -1917,15 +2002,37 @@ namespace HDShop.Migrations
 
             modelBuilder.Entity("HDShop.Goods.GoodCategoryMap", b =>
                 {
-                    b.HasOne("HDShop.Goods.GoodCategory", "Category")
+                    b.HasOne("HDShop.Goods.GoodCategory", "GoodCategory")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("GoodCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("HDShop.Goods.Good", "Good")
                         .WithMany("GoodCategoryMaps")
                         .HasForeignKey("GoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("HDShop.Goods.GoodProperty", b =>
+                {
+                    b.HasOne("HDShop.Goods.GoodProperty", "ParentGoodProperty")
+                        .WithMany("ChildGoodProperties")
+                        .HasForeignKey("ParentGoodPropertyId");
+                });
+
+            modelBuilder.Entity("HDShop.Goods.GoodPropertyMap", b =>
+                {
+                    b.HasOne("HDShop.Goods.Good", "Good")
+                        .WithMany("GoodPropertieMaps")
+                        .HasForeignKey("GoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HDShop.Goods.GoodProperty", "GoodProperty")
+                        .WithMany()
+                        .HasForeignKey("GoodPropertyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

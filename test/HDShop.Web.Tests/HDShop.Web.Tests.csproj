@@ -17,7 +17,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <ProjectReference Include="..\HDShop.Application.Tests\HDShop.Application.Tests.csproj" />
     <ProjectReference Include="..\..\src\HDShop.Web\HDShop.Web.csproj" />
-    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="2.2.1" />
+    <PackageReference Include="Volo.Abp.AspNetCore.TestBase" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

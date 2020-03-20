@@ -1,8 +1,11 @@
 ﻿using HDShop.Goods;
 using HDShop.Orders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.Users;
@@ -16,6 +19,10 @@ namespace HDShop.EntityFrameworkCore
             Check.NotNull(builder, nameof(builder));
 
             /* Configure your own tables/entities inside here */
+            var stringArrayComparer = new ValueComparer<string[]>(
+                (c1, c2) => c1.SequenceEqual(c2),
+                c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                c => c.ToHashSet().ToArray());
 
             builder.Entity<GoodCategory>(b =>
             {
@@ -26,14 +33,12 @@ namespace HDShop.EntityFrameworkCore
             builder.Entity<Good>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "Good", HDShopConsts.DbSchema);
-                b.Property(f => f.SaleState.IsHot).HasColumnName("IsHot").HasColumnType("bit").IsRequired();
-                b.Property(f => f.SaleState.IsNew).HasColumnName("IsNew").HasColumnType("bit").IsRequired();
-                b.Property(f => f.SaleState.IsHot).HasColumnName("IsDiscount").HasColumnType("IsDiscount").IsRequired();
-                b.Property(f => f.SaleState.IsHot).HasColumnName("IsRecommand").HasColumnType("IsRecommand").IsRequired();
-                b.Property(f=>f.ImageUrls).HasConversion(
+                b.ConfigureByConvention();
+                b.OwnsOne(f => f.SaleStates);
+                b.Property(f => f.ImageUrls).HasConversion(
                     v => string.Join(',', v),
-                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries));
-                b.ConfigureFullAuditedAggregateRoot();
+                    v => v.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                .Metadata.SetValueComparer(stringArrayComparer);
             });
             builder.Entity<GoodSku>(b =>
             {
@@ -55,7 +60,7 @@ namespace HDShop.EntityFrameworkCore
             builder.Entity<GoodProperty>(b =>
                 {
                     b.ToTable(HDShopConsts.DbTablePrefix + "GoodProperty", HDShopConsts.DbSchema);
-
+                    b.ConfigureByConvention();
                 });
             builder.Entity<Order>(b =>
             {
