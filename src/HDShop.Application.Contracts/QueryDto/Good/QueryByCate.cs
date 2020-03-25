@@ -7,5 +7,6 @@ namespace HDShop.Goods
 {
     public class QueryByCate : PagedAndSortedResultRequestDto
     {
+        public string CateCode { get; set; }
     }
 }

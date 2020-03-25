@@ -10,6 +10,7 @@ using Volo.Abp.Guids;
 using Volo.Abp.Timing;
 using Volo.Abp.Uow;
 using System.Linq;
+using HDShop.Orders;
 
 namespace HDShop.Data
 {
@@ -19,6 +20,8 @@ namespace HDShop.Data
         private readonly IRepository<GoodCategory,Guid> _repoGoodCategory;
         private readonly IRepository<GoodProperty, Guid> _repoGoodProperty;
         private readonly IRepository<Good, Guid> _repoGood;
+        private readonly IRepository<DeliverCompany, Guid> _repoDeliverCompany;
+        private readonly IRepository<PayCompany, Guid> _repoPayCompany;
         private Guid goodCategoryId;
         private Guid goodPropertyId;
 
@@ -26,13 +29,17 @@ namespace HDShop.Data
             IGuidGenerator GuidGenerator,
             IRepository<GoodCategory, Guid> RepGoodCategory,
             IRepository<GoodProperty, Guid> RepGoodProperty,
-            IRepository<Good, Guid> RepGood
-            ) 
+            IRepository<Good, Guid> RepGood,
+            IRepository<DeliverCompany, Guid> RepoDeliverCompany,
+            IRepository<PayCompany, Guid> RepoPayCompany
+            )
         {
             _guidGenerator = GuidGenerator;
             _repoGoodCategory = RepGoodCategory;
             _repoGoodProperty = RepGoodProperty;
             _repoGood = RepGood;
+            _repoDeliverCompany = RepoDeliverCompany;
+            _repoPayCompany = RepoPayCompany;
         }
 
 
@@ -42,7 +49,10 @@ namespace HDShop.Data
             await GoodCategroySeedAsync();
             await GoodPropertySeedAsync();
             await GoodSeedAsync();
+            await PayCompanyAsync();
+            await DeliverCompanyAsync();
         }
+
 
         private async Task GoodPropertySeedAsync()
         {
@@ -55,12 +65,14 @@ namespace HDShop.Data
                         "口味",
                         "kw",
                         null,
+                        1,
                         new List<GoodProperty>() { 
                             new GoodProperty(
                                 _guidGenerator.Create(),
                                 "麻辣",
                                 "l",
                                 null,
+                                1,
                                 null
                                 ) ,
                             new GoodProperty(
@@ -68,6 +80,7 @@ namespace HDShop.Data
                                 "五香",
                                 "w",
                                 null,
+                                2,
                                 null
                             )
                         }
@@ -125,11 +138,30 @@ namespace HDShop.Data
                         200,
                         1000
                         ) },
-                    new List<GoodPropertyMap>() { new GoodPropertyMap() { Sort = 1, GoodPropertyId = goodPropertyId } },
+                    new List<GoodPropertyMap>() { new GoodPropertyMap() { GoodPropertyId = goodPropertyId } },
                     new List<GoodCategoryMap>() { new GoodCategoryMap() { GoodCategoryId = goodCategoryId } }
                     );
                 entity = await _repoGood.InsertAsync(entity);
 
+            }
+        }
+        private async Task PayCompanyAsync()
+        {
+            var num = await _repoPayCompany.GetCountAsync();
+            if (num == 0)
+            {
+                var entity = new PayCompany("zfb", "支付宝");
+                entity = await _repoPayCompany.InsertAsync(entity);
+            }
+        }
+
+        private async Task DeliverCompanyAsync()
+        {
+            var num = await _repoDeliverCompany.GetCountAsync();
+            if (num == 0)
+            {
+                var entity = new DeliverCompany("sf", "顺丰");
+                entity = await _repoDeliverCompany.InsertAsync(entity);
             }
         }
     }

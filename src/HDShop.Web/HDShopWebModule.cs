@@ -36,6 +36,7 @@ using Volo.Abp.UI.Navigation.Urls;
 using Volo.Abp.UI;
 using Volo.Abp.UI.Navigation;
 using Volo.Abp.VirtualFileSystem;
+using Volo.Abp.Json;
 
 namespace HDShop.Web
 {
@@ -81,6 +82,20 @@ namespace HDShop.Web
             ConfigureNavigationServices();
             ConfigureAutoApiControllers();
             ConfigureSwaggerServices(context.Services);
+            ConfigureJsonOption();
+        }
+
+        private void ConfigureJsonOption()
+        {
+
+            Configure<AbpJsonOptions>(options =>
+            {
+                options.DefaultDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            });
+            Configure<Microsoft.AspNetCore.Mvc.MvcNewtonsoftJsonOptions>(options =>
+            {
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            });
         }
 
         private void ConfigureUrls(IConfiguration configuration)

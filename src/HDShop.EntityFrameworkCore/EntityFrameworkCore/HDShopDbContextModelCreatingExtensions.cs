@@ -24,6 +24,7 @@ namespace HDShop.EntityFrameworkCore
                 c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
                 c => c.ToHashSet().ToArray());
 
+            #region Good
             builder.Entity<GoodCategory>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "GoodCategory", HDShopConsts.DbSchema);
@@ -62,16 +63,46 @@ namespace HDShop.EntityFrameworkCore
                     b.ToTable(HDShopConsts.DbTablePrefix + "GoodProperty", HDShopConsts.DbSchema);
                     b.ConfigureByConvention();
                 });
+            #endregion
+
+            #region Order
             builder.Entity<Order>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "Order", HDShopConsts.DbSchema);
-                b.ConfigureFullAuditedAggregateRoot();
+                b.ConfigureByConvention();
+                b.OwnsOne(f => f.PayOrder);
+                b.OwnsOne(f => f.DeliverOrder);
             });
             builder.Entity<OrderLine>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "OrderLine", HDShopConsts.DbSchema);
-                
+
             });
+            builder.Entity<OrderDeliverAddressMap>(b =>
+            {
+                b.ToTable(HDShopConsts.DbTablePrefix + "OrderDeliverAddressMap", HDShopConsts.DbSchema);
+                b.HasKey(f => new { f.DeliverAddressId, f.OrderId });
+
+            });
+            builder.Entity<DeliverCompany>(b =>
+            {
+                b.ToTable(HDShopConsts.DbTablePrefix + "DeliverCompany", HDShopConsts.DbSchema);
+                b.ConfigureByConvention();
+
+            });
+            builder.Entity<DeliverAddress>(b =>
+            {
+                b.ToTable(HDShopConsts.DbTablePrefix + "DeliverAddress", HDShopConsts.DbSchema);
+                b.ConfigureByConvention();
+
+            });
+            builder.Entity<PayCompany>(b =>
+            {
+                b.ToTable(HDShopConsts.DbTablePrefix + "PayCompany", HDShopConsts.DbSchema);
+                b.ConfigureByConvention();
+
+            });
+            #endregion
         }
 
         public static void ConfigureCustomUserProperties<TUser>(this EntityTypeBuilder<TUser> b)

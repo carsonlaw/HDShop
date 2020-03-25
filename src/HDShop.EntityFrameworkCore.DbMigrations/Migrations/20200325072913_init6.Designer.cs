@@ -4,14 +4,16 @@ using HDShop.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HDShop.Migrations
 {
     [DbContext(typeof(HDShopMigrationsDbContext))]
-    partial class HDShopMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200325072913_init6")]
+    partial class init6
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -519,12 +521,6 @@ namespace HDShop.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CreatorId");
-
-                    b.HasIndex("DeleterId");
-
-                    b.HasIndex("LastModifierId");
 
                     b.ToTable("HDOrder");
                 });
@@ -2323,18 +2319,6 @@ namespace HDShop.Migrations
 
             modelBuilder.Entity("HDShop.Orders.Order", b =>
                 {
-                    b.HasOne("HDShop.Users.AppUser", "Creator")
-                        .WithMany()
-                        .HasForeignKey("CreatorId");
-
-                    b.HasOne("HDShop.Users.AppUser", "Deleter")
-                        .WithMany()
-                        .HasForeignKey("DeleterId");
-
-                    b.HasOne("HDShop.Users.AppUser", "LastModifier")
-                        .WithMany()
-                        .HasForeignKey("LastModifierId");
-
                     b.OwnsOne("HDShop.Orders.DeliverOrder", "DeliverOrder", b1 =>
                         {
                             b1.Property<Guid>("OrderId")

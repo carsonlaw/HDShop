@@ -27,7 +27,6 @@ namespace HDShop.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(builder);
 
             /* Include modules to your migration db context */
 
@@ -50,6 +49,7 @@ namespace HDShop.EntityFrameworkCore
             /* Configure your own tables/entities inside the ConfigureHDShop method */
 
             builder.ConfigureHDShop();
+            base.OnModelCreating(builder);
         }
     }
 }

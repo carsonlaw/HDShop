@@ -34,6 +34,10 @@ namespace HDShop.Goods
         [StringLength(GoodConsts.NameLength)]
         public virtual string Name { get; set; }
 
+        [Required]
+        [StringLength(GoodConsts.SubNameLength)]
+        public virtual string SubName { get; set; }
+
         /// <summary>
         /// 编码
         /// </summary>
@@ -54,23 +58,53 @@ namespace HDShop.Goods
         [Required]
         public virtual string[] ImageUrls { get; set; }
 
-        //[NotMapped]
-        //[Required]
-        //public virtual string[] ImageUrls
-        //{
-        //    get { return ImageUrlsValue.Split(','); }
-        //    set { ImageUrlsValue = string.Join(',', value); }
-        //}
         public virtual SaleStates SaleStates { get; set; }
 
+        [NotMapped]
+        public virtual int Stock
+        {
+            get
+            {
+                return GoodSkus.Where(f=>f.OnSale).Sum(f => f.Stock);
+            }
+        }
+        [NotMapped]
+        public virtual decimal MinPrice
+        {
+            get
+            {
+                return GoodSkus.Where(f => f.OnSale).Min(f => f.PriceSale);
+            }
+        }
+        [NotMapped]
+        public virtual decimal MinPriceProduct
+        {
+            get
+            {
+                return GoodSkus.Where(f => f.OnSale).OrderByDescending(f => f.PriceSale).FirstOrDefault().PriceProduct;
+            }
+        }
+        [NotMapped]
+        public virtual int NumSales
+        {
+            get
+            {
+                return GoodSkus.Sum(f => f.NumSales);
+            }
+        }
+        [NotMapped]
+        public virtual bool OnSale
+        {
+            get
+            {
+                return GoodSkus.Any(f => f.OnSale);
+            }
+        }
 
         #endregion
 
         #region 方法
-        public int GetStocks()
-        {
-            return GoodSkus.Sum(f => f.Stock);
-        }
+
         #endregion
 
         #region 导航属性

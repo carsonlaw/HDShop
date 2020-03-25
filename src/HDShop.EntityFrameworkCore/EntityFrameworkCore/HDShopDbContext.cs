@@ -30,6 +30,10 @@ namespace HDShop.EntityFrameworkCore
         public DbSet<GoodProperty> GoodProperties { get; set; }
         public DbSet<Good> Goods { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<DeliverCompany> DeliverCompanys { get; set; }
+        public DbSet<DeliverAddress> DeliverAddress { get; set; }
+        public DbSet<PayCompany> PayCompanys { get; set; }
+
 
         public HDShopDbContext(DbContextOptions<HDShopDbContext> options)
             : base(options)
@@ -40,6 +44,7 @@ namespace HDShop.EntityFrameworkCore
         protected override void OnModelCreating(ModelBuilder builder)
         {
             /* Configure the shared tables (with included modules) here */
+
 
             builder.Entity<AppUser>(b =>
             {

@@ -5,26 +5,20 @@ using Volo.Abp.Domain.Entities.Auditing;
 using System.Linq;
 using System.Text;
 using System.ComponentModel.DataAnnotations.Schema;
+using HDShop.Users;
 
 namespace HDShop.Orders
 {
-    public class Order : FullAuditedAggregateRoot<Guid>
+    public class Order : FullAuditedAggregateRootWithUser<Guid, AppUser>
     {
         #region 属性
-        
+
         /// <summary>
         /// 编码
         /// </summary>
         [Required]
         [StringLength(OrderConsts.CodeLength)]
         public virtual string Code { get; set; }
-
-        [Required]
-        [StringLength(OrderConsts.UserIdLength)]
-        public virtual string UserId { get; set; }
-        [Required]
-        [StringLength(OrderConsts.UserNameLength)]
-        public virtual string UserName { get; set; }
 
         [NotMapped]
         public virtual decimal OrderPrice
@@ -35,10 +29,6 @@ namespace HDShop.Orders
             }
         }
 
-        [Column(TypeName = "decimal(18,2)")]
-        public virtual decimal PayPrice { get; set; }
-
-        public virtual DateTime PayTime { get; set; }
 
         [Required]
         public virtual OrderStatus OrderStatus { get; set; }
@@ -57,17 +47,26 @@ namespace HDShop.Orders
 
         public void SetCanceled()
         {
-            OrderStatus = OrderStatus.Canceled;
-            foreach (var orderline in OrderLines)
+            if (OrderStatus != OrderStatus.Init)
             {
-                orderline.GoodSku.SetStockAdd(orderline.Quantity);
+                foreach (var orderline in OrderLines)
+                {
+                    orderline.GoodSku.SetStockAdd(orderline.Quantity);
+                }
             }
+            OrderStatus = OrderStatus.Canceled;
         }
+
         #endregion
 
         #region 导航属性
 
         public virtual IEnumerable<OrderLine> OrderLines { get; set; }
+
+        public virtual IEnumerable<OrderDeliverAddressMap> DeliverAddressMaps { get; set; }
+
+        public virtual PayOrder? PayOrder { get; set; }
+        public virtual DeliverOrder? DeliverOrder { get; set; }
 
         #endregion
     }
