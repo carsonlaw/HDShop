@@ -43,8 +43,10 @@ namespace HDShop.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            /* Configure the shared tables (with included modules) here */
 
+            builder.ConfigureHDShop();
+            /* Configure the shared tables (with included modules) here */
+            base.OnModelCreating(builder);
 
             builder.Entity<AppUser>(b =>
             {
@@ -58,8 +60,7 @@ namespace HDShop.EntityFrameworkCore
 
             /* Configure your own tables/entities inside the ConfigureHDShop method */
 
-            builder.ConfigureHDShop();
-            base.OnModelCreating(builder);
+            //builder.ConfigureHDShop();
         }
     }
 }

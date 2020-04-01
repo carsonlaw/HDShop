@@ -7,7 +7,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace HDShop.Orders
 {
-    public class DeliverAddress : FullAuditedAggregateRootWithUser<Guid, AppUser>
+    public class DeliverAddress : FullAuditedEntityWithUser<Guid, AppUser>
     {
         [Required]
         [StringLength(AddressConsts.NameLength)]

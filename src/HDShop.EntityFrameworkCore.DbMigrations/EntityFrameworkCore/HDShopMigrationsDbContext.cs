@@ -1,7 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HDShop.Users;
+using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
+using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using Volo.Abp.IdentityServer.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.TenantManagement.EntityFrameworkCore;
+using Volo.Abp.Users.EntityFrameworkCore;
 
 namespace HDShop.EntityFrameworkCore
 {
@@ -27,7 +30,8 @@ namespace HDShop.EntityFrameworkCore
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+            builder.ConfigureHDShop();
+            base.OnModelCreating(builder);
             /* Include modules to your migration db context */
 
             builder.ConfigurePermissionManagement();
@@ -41,15 +45,22 @@ namespace HDShop.EntityFrameworkCore
 
             /* Configure customizations for entities from the modules included  */
 
-            builder.Entity<IdentityUser>(b =>
+            //builder.Entity<IdentityUser>(b =>
+            //{
+            //    b.ConfigureCustomUserProperties();
+            //});
+            builder.Entity<AppUser>(b =>
             {
+                b.ToTable("AbpUsers");
+                b.ConfigureByConvention();
+                b.ConfigureAbpUser();
+                b.HasOne<IdentityUser>().WithOne().HasForeignKey<AppUser>(e => e.Id);
+
                 b.ConfigureCustomUserProperties();
             });
 
             /* Configure your own tables/entities inside the ConfigureHDShop method */
-
-            builder.ConfigureHDShop();
-            base.OnModelCreating(builder);
+            //builder.ConfigureHDShop();
         }
     }
 }

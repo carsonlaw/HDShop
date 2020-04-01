@@ -4,14 +4,16 @@ using HDShop.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HDShop.Migrations
 {
     [DbContext(typeof(HDShopMigrationsDbContext))]
-    partial class HDShopMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200401091303_Init10")]
+    partial class Init10
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,6 +24,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Goods.Good", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -99,6 +102,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Goods.GoodCategory", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -186,6 +190,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Goods.GoodProperty", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -264,6 +269,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Goods.GoodSku", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -341,6 +347,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Orders.DeliverAddress", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
@@ -401,6 +408,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Orders.DeliverCompany", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -460,6 +468,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Orders.Order", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")
@@ -559,6 +568,7 @@ namespace HDShop.Migrations
             modelBuilder.Entity("HDShop.Orders.PayCompany", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Code")

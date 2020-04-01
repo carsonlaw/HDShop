@@ -11,11 +11,12 @@ namespace HDShop.Goods
     public class Good : FullAuditedAggregateRoot<Guid>
     {
         protected Good() { }
-        public Good(Guid id, string name, string code, string description, string imageBaseUrl, string[] imageUrls, 
+        public Good(Guid id, string name, string subName, string code, string description, string imageBaseUrl, string[] imageUrls, 
             SaleStates saleStates, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodPropertyMap> goodPropertieMaps, IEnumerable<GoodCategoryMap> goodCategoryMaps)
             : base(id)
         {
             Name = name;
+            SubName = subName;
             Code = code;
             Description = description;
             ImageBaseUrl = imageBaseUrl;

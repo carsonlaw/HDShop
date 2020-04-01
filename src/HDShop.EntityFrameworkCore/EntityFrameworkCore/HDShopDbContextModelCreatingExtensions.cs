@@ -70,12 +70,15 @@ namespace HDShop.EntityFrameworkCore
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "Order", HDShopConsts.DbSchema);
                 b.ConfigureByConvention();
-                b.OwnsOne(f => f.PayOrder);
+                b.OwnsOne(f => f.PayOrder)
+                    .Property(f=>f.PayPrice).HasColumnType("decimal(18,2)");
                 b.OwnsOne(f => f.DeliverOrder);
             });
             builder.Entity<OrderLine>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "OrderLine", HDShopConsts.DbSchema);
+                b.HasKey(f => new { f.OrderId, f.GoodSkuId });
+                b.Property(f => f.Price).HasColumnType("decimal(18,2)");
 
             });
             builder.Entity<OrderDeliverAddressMap>(b =>

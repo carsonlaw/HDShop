@@ -25,7 +25,7 @@ namespace HDShop.Orders
         {
             get
             {
-                return OrderLines.Sum(f => f.PriceTotal);
+                return OrderLines.Sum(f => f.Price * f.Quantity);
             }
         }
 

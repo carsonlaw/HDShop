@@ -43,7 +43,8 @@ namespace HDShop
             CreateMap<DeliverOrder, DeliverOrderDto>();
             CreateMap<DeliverOrderDto, DeliverOrder>();
 
-
+            CreateMap<DeliverAddress, DeliverAddressDto>();
+            CreateMap<DeliverAddressDto, DeliverAddress>();
             #endregion
         }
     }

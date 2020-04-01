@@ -122,6 +122,7 @@ namespace HDShop.Data
                 var entity = new Good(
                     _guidGenerator.Create(),
                     "风干牛肉",
+                    "最好的休闲",
                     "ls001",
                     "风干牛肉",
                     "",

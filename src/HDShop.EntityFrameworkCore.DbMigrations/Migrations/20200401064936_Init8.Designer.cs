@@ -4,14 +4,16 @@ using HDShop.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace HDShop.Migrations
 {
     [DbContext(typeof(HDShopMigrationsDbContext))]
-    partial class HDShopMigrationsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200401064936_Init8")]
+    partial class Init8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -642,16 +644,10 @@ namespace HDShop.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnName("Email")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("EmailConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("EmailConfirmed")
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<string>("ExtraProperties")
                         .HasColumnName("ExtraProperties")
@@ -672,45 +668,32 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
-                        .HasColumnName("Name")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnName("PhoneNumber")
-                        .HasColumnType("nvarchar(16)")
-                        .HasMaxLength(16);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("PhoneNumberConfirmed")
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false);
+                        .HasColumnType("bit");
 
                     b.Property<string>("Surname")
-                        .HasColumnName("Surname")
-                        .HasColumnType("nvarchar(64)")
-                        .HasMaxLength(64);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("TenantId")
                         .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnName("UserName")
-                        .HasColumnType("nvarchar(256)")
-                        .HasMaxLength(256);
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AbpUsers");
+                    b.ToTable("AppUser");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ApplicationName")
@@ -744,6 +727,8 @@ namespace HDShop.Migrations
                         .HasMaxLength(256);
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CorrelationId")
@@ -817,7 +802,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLogAction", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AuditLogId")
@@ -852,6 +836,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(256);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -866,7 +851,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityChange", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AuditLogId")
@@ -916,7 +900,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.AuditLogging.EntityPropertyChange", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("EntityChangeId")
@@ -945,6 +928,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(64);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -957,10 +941,11 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.BackgroundJobs.BackgroundJobRecord", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
@@ -1012,7 +997,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.FeatureManagement.FeatureValue", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -1043,7 +1027,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityClaimType", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1091,7 +1074,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityRole", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1128,6 +1110,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(256);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -1155,6 +1138,7 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -1167,7 +1151,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.Identity.IdentityUser", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AccessFailedCount")
@@ -1324,6 +1307,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(1024);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -1355,6 +1339,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(196);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "LoginProvider");
@@ -1373,6 +1358,7 @@ namespace HDShop.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
@@ -1396,6 +1382,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(128);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Value")
@@ -1409,7 +1396,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.ApiResources.ApiResource", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -1566,7 +1552,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Clients.Client", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("AbsoluteRefreshTokenLifetime")
@@ -1888,7 +1873,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.Devices.DeviceFlowCodes", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ClientId")
@@ -1961,6 +1945,8 @@ namespace HDShop.Migrations
                         .HasMaxLength(200);
 
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnName("ConcurrencyStamp")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreationTime")
@@ -2016,7 +2002,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.IdentityServer.IdentityResources.IdentityResource", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2094,7 +2079,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.PermissionManagement.PermissionGrant", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -2113,6 +2097,7 @@ namespace HDShop.Migrations
                         .HasMaxLength(64);
 
                     b.Property<Guid?>("TenantId")
+                        .HasColumnName("TenantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -2125,7 +2110,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.SettingManagement.Setting", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -2156,7 +2140,6 @@ namespace HDShop.Migrations
             modelBuilder.Entity("Volo.Abp.TenantManagement.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -2412,15 +2395,6 @@ namespace HDShop.Migrations
                     b.HasOne("HDShop.Orders.Order", null)
                         .WithMany("OrderLines")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("HDShop.Users.AppUser", b =>
-                {
-                    b.HasOne("Volo.Abp.Identity.IdentityUser", null)
-                        .WithOne()
-                        .HasForeignKey("HDShop.Users.AppUser", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
