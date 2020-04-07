@@ -33,7 +33,7 @@ namespace HDShop
             #region Order
             CreateMap<Order, OrderDto>();
             CreateMap<OrderCreateUpdateDto, Order>()
-                .ForMember(d => d.DeliverAddressMaps, opt => opt.MapFrom(s => s.DeliverAddress.Select(map=> new OrderDeliverAddressMap() { DeliverAddressId = map.Id })));
+                .ForMember(d => d.DeliverAddressMap, opt => opt.MapFrom(s => new OrderDeliverAddressMap() { DeliverAddressId = s.DeliverAddressId }));
             CreateMap<OrderLine, OrderLineDto>();
             CreateMap<OrderLineDto, OrderLine>();
             

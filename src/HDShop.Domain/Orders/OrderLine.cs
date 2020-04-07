@@ -29,7 +29,6 @@ namespace HDShop.Orders
         #endregion
 
         #region 导航
-        public virtual GoodSku GoodSku { get; set; }
         public virtual Guid GoodSkuId { get; set; }
         public virtual Guid OrderId { get; set; }
 

@@ -12,12 +12,10 @@ namespace HDShop.Orders
         public virtual int Quantity { get; set; }
         [Required]
         public virtual decimal Price { get; set; }
-        [Required]
-        public virtual decimal PriceTotal { get; set; }
 
 
         #region 导航
-        public virtual GoodSkuDto GoodSku { get; set; }
+        public virtual Guid GoodSkuId { get; set; }
         #endregion
     }
 }
