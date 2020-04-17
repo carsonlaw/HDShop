@@ -11,7 +11,7 @@ namespace HDShop.Orders
     /// <summary>
     /// 订单生成雪花算法
     /// </summary>
-    public class CodeGenerator : ICodeGenerator,ITransientDependency
+    public class CodeGenerator : ICodeGenerator,ISingletonDependency
     {
         //机器ID
         private static long workerId = 1;
