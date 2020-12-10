@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace HDShop.Goods
@@ -23,5 +24,6 @@ namespace HDShop.Goods
 
         public virtual GoodProperty? ParentGoodProperty { get; set; }
         public virtual IEnumerable<GoodProperty> ChildGoodProperties { get; set; }
+        public virtual IQueryable<Good> Goods { get; set; }
     }
 }

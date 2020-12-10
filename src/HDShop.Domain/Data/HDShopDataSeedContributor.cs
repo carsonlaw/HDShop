@@ -139,9 +139,9 @@ namespace HDShop.Data
                         200,
                         1000
                         ) },
-                    new List<GoodPropertyMap>() { new GoodPropertyMap() { GoodPropertyId = goodPropertyId } },
-                    new List<GoodCategoryMap>() { new GoodCategoryMap() { GoodCategoryId = goodCategoryId } }
-                    );
+                    new List<GoodProperty>() { _repoGoodProperty.FirstOrDefault() },
+                    new List<GoodCategory>() { _repoGoodCategory.FirstOrDefault() }
+                    ); ;
                 entity = await _repoGood.InsertAsync(entity);
 
             }

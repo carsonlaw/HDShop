@@ -31,10 +31,17 @@ namespace HDShop.EntityFrameworkCore
                 b.ConfigureFullAuditedAggregateRoot();
 
             });
+            builder.Entity<GoodProperty>(b =>
+            {
+                b.ToTable(HDShopConsts.DbTablePrefix + "GoodProperty", HDShopConsts.DbSchema);
+                b.ConfigureByConvention();
+            });
             builder.Entity<Good>(b =>
             {
                 b.ToTable(HDShopConsts.DbTablePrefix + "Good", HDShopConsts.DbSchema);
                 b.ConfigureByConvention();
+                b.HasMany(f => f.GoodCategorys).WithMany(f=>f.Goods);
+                b.HasMany(f => f.GoodProperties).WithMany(f => f.Goods);
                 b.OwnsOne(f => f.SaleStates);
                 b.Property(f => f.ImageUrls).HasConversion(
                     v => string.Join(',', v),
@@ -46,23 +53,7 @@ namespace HDShop.EntityFrameworkCore
                 b.ToTable(HDShopConsts.DbTablePrefix + "GoodSku", HDShopConsts.DbSchema);
                 b.ConfigureFullAudited();
             });
-            builder.Entity<GoodCategoryMap>(b =>
-            {
-                b.ToTable(HDShopConsts.DbTablePrefix + "GoodCategoryMap", HDShopConsts.DbSchema);
-                b.HasKey(f => new { f.GoodCategoryId, f.GoodId });
 
-            });
-            builder.Entity<GoodPropertyMap>(b =>
-            {
-                b.ToTable(HDShopConsts.DbTablePrefix + "GoodPropertyMap", HDShopConsts.DbSchema);
-                b.HasKey(f => new { f.GoodPropertyId, f.GoodId });
-
-            });
-            builder.Entity<GoodProperty>(b =>
-                {
-                    b.ToTable(HDShopConsts.DbTablePrefix + "GoodProperty", HDShopConsts.DbSchema);
-                    b.ConfigureByConvention();
-                });
             #endregion
 
             #region Order
@@ -79,12 +70,6 @@ namespace HDShop.EntityFrameworkCore
                 b.ToTable(HDShopConsts.DbTablePrefix + "OrderLine", HDShopConsts.DbSchema);
                 b.HasKey(f => new { f.OrderId, f.GoodSkuId });
                 b.Property(f => f.Price).HasColumnType("decimal(18,2)");
-
-            });
-            builder.Entity<OrderDeliverAddressMap>(b =>
-            {
-                b.ToTable(HDShopConsts.DbTablePrefix + "OrderDeliverAddressMap", HDShopConsts.DbSchema);
-                b.HasKey(f => new { f.DeliverAddressId, f.OrderId });
 
             });
             builder.Entity<DeliverCompany>(b =>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace HDShop.Goods
@@ -43,6 +44,7 @@ namespace HDShop.Goods
 #pragma warning restore CS8632 // 只能在 "#nullable" 注释上下文内的代码中使用可为 null 的引用类型的注释。
         public virtual IEnumerable<GoodCategory> ChildCategorys { get; set; }
         //public virtual IEnumerable<GoodCategoryMap> GoodCategoryMaps { get; set; }
+        public virtual IQueryable<Good> Goods { get; set; }
         #endregion
     }
 }

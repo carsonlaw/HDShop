@@ -19,8 +19,8 @@ namespace HDShop
 
             #region Good
 
-            CreateMap<Good, GoodDto>()
-                .ForMember(d=>d.GoodPropertieMaps,opt=>opt.MapFrom(s=>s.GoodPropertieMaps.Select(map=>map.GoodProperty)));
+            CreateMap<Good, GoodDto>();
+                //.ForMember(d=>d.GoodPropertieMaps,opt=>opt.MapFrom(s=>s.GoodProperties.Select(map=>map.GoodProperty)));
             CreateMap<GoodCreateUpdateDto, Good>();
             CreateMap<GoodSku, GoodSkuDto>();
             CreateMap<GoodSkuDto, GoodSku>();
@@ -33,7 +33,7 @@ namespace HDShop
             #region Order
             CreateMap<Order, OrderDto>();
             CreateMap<OrderCreateUpdateDto, Order>()
-                .ForMember(d => d.DeliverAddressMap, opt => opt.MapFrom(s => new OrderDeliverAddressMap() { DeliverAddressId = s.DeliverAddressId }));
+                .ForMember(d => d.DeliverAddress.Id, opt => opt.MapFrom(s => s.DeliverAddressId));
             CreateMap<OrderLine, OrderLineDto>();
             CreateMap<OrderLineDto, OrderLine>();
             

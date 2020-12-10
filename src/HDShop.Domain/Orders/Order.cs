@@ -51,7 +51,7 @@ namespace HDShop.Orders
 
         public virtual IEnumerable<OrderLine> OrderLines { get; set; }
 
-        public virtual OrderDeliverAddressMap DeliverAddressMap { get; set; }
+        public virtual DeliverAddress DeliverAddress { get; set; }
 
         public virtual PayOrder? PayOrder { get; set; }
         public virtual DeliverOrder? DeliverOrder { get; set; }

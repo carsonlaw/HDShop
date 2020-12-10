@@ -8,6 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Goods\GoodCategoryMap.cs" />
+    <Compile Remove="Goods\GoodPropertyMap.cs" />
+    <Compile Remove="Orders\OrderDeliverAddressMap.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HDShop.Domain.Shared\HDShop.Domain.Shared.csproj" />
   </ItemGroup>
 

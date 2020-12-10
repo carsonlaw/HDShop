@@ -40,7 +40,8 @@ namespace HDShop.EntityFrameworkCore
             {
                 /* The main point to change your DBMS.
                  * See also HDShopMigrationsDbContextFactory for EF Core tooling. */
-                options.UseSqlServer();
+                //options.UseSqlServer();
+                options.UseMySQL();
             });
 
         }

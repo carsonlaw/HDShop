@@ -12,7 +12,7 @@ namespace HDShop.Goods
     {
         protected Good() { }
         public Good(Guid id, string name, string subName, string code, string description, string imageBaseUrl, string[] imageUrls, 
-            SaleStates saleStates, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodPropertyMap> goodPropertieMaps, IEnumerable<GoodCategoryMap> goodCategoryMaps)
+            SaleStates saleStates, IEnumerable<GoodSku> goodSkus, IEnumerable<GoodProperty> goodProperties, IEnumerable<GoodCategory> goodCategorys)
             : base(id)
         {
             Name = name;
@@ -23,8 +23,8 @@ namespace HDShop.Goods
             ImageUrls = imageUrls;
             SaleStates = saleStates;
             GoodSkus = goodSkus;
-            GoodPropertieMaps = goodPropertieMaps;
-            GoodCategoryMaps = goodCategoryMaps;
+            GoodProperties = goodProperties;
+            GoodCategorys = goodCategorys;
         }
 
         #region 属性
@@ -110,11 +110,11 @@ namespace HDShop.Goods
 
         #region 导航属性
 
-        public virtual IEnumerable<GoodCategoryMap> GoodCategoryMaps { get; set; }
+        public virtual IEnumerable<GoodCategory> GoodCategorys { get; set; }
 
         public virtual IEnumerable<GoodSku> GoodSkus { get; set; }
 
-        public virtual IEnumerable<GoodPropertyMap> GoodPropertieMaps { get; set; }
+        public virtual IEnumerable<GoodProperty> GoodProperties { get; set; }
 
         #endregion
     }

@@ -39,13 +39,12 @@ namespace HDShop.Goods
             var ret = base.CreateFilteredQuery(input)
                 .AsNoTracking()
                 .Include(f=>f.GoodSkus)
-                .Include(f=>f.GoodPropertieMaps)
-                .ThenInclude(f=>f.GoodProperty)
+                .Include(f=>f.GoodProperties)
                 .ThenInclude(f=>f.ChildGoodProperties)
                 .AsQueryable();
 
             ret = ret.WhereIf(!string.IsNullOrWhiteSpace(input.CateCode),
-                f => f.GoodCategoryMaps.Any(m => m.GoodCategory.Code == input.CateCode));
+                f => f.GoodCategorys.Any(m => m.Code == input.CateCode));
             return ret;
         }
 

@@ -26,13 +26,13 @@ namespace HDShop.EntityFrameworkCore
         /* Add DbSet properties for your Aggregate Roots / Entities here.
          * Also map them inside HDShopDbContextModelCreatingExtensions.ConfigureHDShop
          */
-        public DbSet<GoodCategory> GoodCategories { get; set; }
-        public DbSet<GoodProperty> GoodProperties { get; set; }
-        public DbSet<Good> Goods { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<DeliverCompany> DeliverCompanys { get; set; }
-        public DbSet<DeliverAddress> DeliverAddress { get; set; }
-        public DbSet<PayCompany> PayCompanys { get; set; }
+        //public DbSet<GoodCategory> GoodCategories { get; set; }
+        //public DbSet<GoodProperty> GoodProperties { get; set; }
+        //public DbSet<Good> Goods { get; set; }
+        //public DbSet<Order> Orders { get; set; }
+        //public DbSet<DeliverCompany> DeliverCompanys { get; set; }
+        //public DbSet<DeliverAddress> DeliverAddress { get; set; }
+        //public DbSet<PayCompany> PayCompanys { get; set; }
 
 
         public HDShopDbContext(DbContextOptions<HDShopDbContext> options)
