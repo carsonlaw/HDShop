@@ -24,6 +24,6 @@ namespace HDShop.Goods
 
         public virtual GoodProperty? ParentGoodProperty { get; set; }
         public virtual IEnumerable<GoodProperty> ChildGoodProperties { get; set; }
-        public virtual IQueryable<Good> Goods { get; set; }
+        public virtual IEnumerable<Good> Goods { get; set; }
     }
 }

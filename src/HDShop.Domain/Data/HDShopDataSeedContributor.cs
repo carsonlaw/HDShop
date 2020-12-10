@@ -22,8 +22,8 @@ namespace HDShop.Data
         private readonly IRepository<Good, Guid> _repoGood;
         private readonly IRepository<DeliverCompany, Guid> _repoDeliverCompany;
         private readonly IRepository<PayCompany, Guid> _repoPayCompany;
-        private Guid goodCategoryId;
-        private Guid goodPropertyId;
+        private GoodCategory goodCategory;
+        private GoodProperty goodProperty;
 
         public HDShopDataSeedContributor(
             IGuidGenerator GuidGenerator,
@@ -59,8 +59,8 @@ namespace HDShop.Data
             var num = await _repoGoodProperty.GetCountAsync();
             if (num == 0)
             {
-                goodPropertyId = _guidGenerator.Create();
-                var entity = await _repoGoodProperty.InsertAsync(new GoodProperty(
+                var goodPropertyId = _guidGenerator.Create();
+                goodProperty = await _repoGoodProperty.InsertAsync(new GoodProperty(
                         goodPropertyId,
                         "口味",
                         "kw",
@@ -88,7 +88,7 @@ namespace HDShop.Data
             }
             else
             {
-                goodPropertyId = _repoGoodProperty.FirstOrDefault().Id;
+                goodProperty = _repoGoodProperty.FirstOrDefault();
             }
         }
 
@@ -97,8 +97,8 @@ namespace HDShop.Data
             var num = await _repoGoodCategory.GetCountAsync();
             if (num == 0)
             {
-                goodCategoryId = _guidGenerator.Create();
-                var entity = new GoodCategory(
+                var goodCategoryId = _guidGenerator.Create();
+                goodCategory = new GoodCategory(
                     goodCategoryId,
                     "休闲零食",
                     "ls",
@@ -107,11 +107,11 @@ namespace HDShop.Data
                     null,
                     null
                     );
-                entity = await _repoGoodCategory.InsertAsync(entity);
+                goodCategory = await _repoGoodCategory.InsertAsync(goodCategory);
             }
             else
             {
-                goodCategoryId = _repoGoodCategory.FirstOrDefault().Id;
+                goodCategory = _repoGoodCategory.FirstOrDefault();
             }
         }
         private async Task GoodSeedAsync()
@@ -139,8 +139,8 @@ namespace HDShop.Data
                         200,
                         1000
                         ) },
-                    new List<GoodProperty>() { _repoGoodProperty.FirstOrDefault() },
-                    new List<GoodCategory>() { _repoGoodCategory.FirstOrDefault() }
+                    new List<GoodProperty>() { goodProperty },
+                    new List<GoodCategory>() { goodCategory }
                     ); ;
                 entity = await _repoGood.InsertAsync(entity);
 
